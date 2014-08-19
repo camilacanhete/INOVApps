@@ -27,7 +27,11 @@ function Update () {
  	nav.speed = speed;
  	
  	//Debug.Log(nav.remainingDistance);
- 	
+ 	if(currentTile >= gameController.GetComponent(GameControllerScript).numberOfTiles.length)
+ 	{
+ 		Debug.Log("Player " + playerNumber + " won!");
+ 		return;
+ 	}
  	
  	if(currentMoves > 0 && nav.pathStatus == NavMeshPathStatus.PathComplete && nav.remainingDistance == 0)
  	{
@@ -68,12 +72,6 @@ function Update () {
  	else
  	{
  		playerIsMoving = false;
- 		
- 		
- 		if(playerNumber == gameController.GetComponent(GameControllerScript).currentPlayerNumber)
- 		{
- 			currentMoves = gameController.GetComponent(GameControllerScript).ChooseRandomNumber();
- 		}
  		
  	}
 	
