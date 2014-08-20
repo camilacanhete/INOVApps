@@ -73,7 +73,7 @@ function checkNextAction()
 function Update () 
 {
 
-	Debug.Log(Mathf.CeilToInt(countTime));
+	//Debug.Log(Mathf.CeilToInt(countTime));
 	
 	//csantos: timer count down
 	if(Mathf.CeilToInt(countTime) > 0) 

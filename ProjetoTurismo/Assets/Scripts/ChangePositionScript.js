@@ -5,6 +5,8 @@ public var currentMoves : int = 0;							//csantos: how many tiles player needs 
 public var playerNumber : int = 1;							//csantos: number of the player's turn (first, second, third or forth)
 public var offTileDistance : float = 0.3;					//csantos: off-path distance in the last movement of player's turn
 public var playerIsMoving : boolean = false;				//csantos: check if player is moving
+public var gravity : float = 30.0;
+public var jumpSpeed : float = 6.0;
  
 private var nav : NavMeshAgent;								//csantos: reference to the nav mesh agent
 private var controller : CharacterController;				//csantos: reference to the character controller			
@@ -24,26 +26,9 @@ function Start ()
 	
 }
 
-function MoveTowardsTarget(target : Vector3) {
-
-     movementDirection = target - transform.position;
-     //Get the difference.
-     
-     if(movementDirection.magnitude > 0.1) {
-     //If we're further away than .1 unit, move towards the target.
-     //The minimum allowable tolerance varies with the speed of the object and the framerate. 
-     // 2 * tolerance must be >= moveSpeed / framerate or the object will jump right over the stop.
-          
-          movementDirection = offset.normalized * speed;
-          //normalize it and account for movement speed.
-          controller.Move(movementDirection * Time.deltaTime);
-          //actually move the character.
-     }
-}
-
 function Update () 
 {
- 	/*
+
  	nav.speed = speed; //csantos: adjust speed manually
  	
 
@@ -100,5 +85,5 @@ function Update ()
  		playerIsMoving = false;
  		
  	}
-	*/
+	
 }
