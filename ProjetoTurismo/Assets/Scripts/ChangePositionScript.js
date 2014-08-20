@@ -7,6 +7,7 @@ public var offTileDistance : float = 0.3;					//csantos: off-path distance in th
 public var playerIsMoving : boolean = false;				//csantos: check if player is moving
  
 private var nav : NavMeshAgent;								//csantos: reference to the nav mesh agent
+private var controller : CharacterController;				//csantos: reference to the character controller			
 private var nextPoint : GameObject = null;					//csantos: reference to the next tile of the player's movement
 private var currentTile : int = 0;							//csantos: current tile number
 private var movementDirection : Vector3 = Vector3.zero;		//csantos: player's next movement direction
@@ -18,13 +19,31 @@ function Start ()
 {
 	nav = GetComponent(NavMeshAgent); //csantos : init navmesh reference
 	col = GetComponent(CapsuleCollider); //csantos : init capsule collider reference
+	controller = GetComponent(CharacterController); //csantos: init character controller
 	gameController = GameObject.Find(Vars.GAME_CONTROLLER); //csantos: init game controller reference
 	
 }
 
+function MoveTowardsTarget(target : Vector3) {
+
+     movementDirection = target - transform.position;
+     //Get the difference.
+     
+     if(movementDirection.magnitude > 0.1) {
+     //If we're further away than .1 unit, move towards the target.
+     //The minimum allowable tolerance varies with the speed of the object and the framerate. 
+     // 2 * tolerance must be >= moveSpeed / framerate or the object will jump right over the stop.
+          
+          movementDirection = offset.normalized * speed;
+          //normalize it and account for movement speed.
+          controller.Move(movementDirection * Time.deltaTime);
+          //actually move the character.
+     }
+}
+
 function Update () 
 {
- 
+ 	/*
  	nav.speed = speed; //csantos: adjust speed manually
  	
 
@@ -81,5 +100,5 @@ function Update ()
  		playerIsMoving = false;
  		
  	}
-	
+	*/
 }

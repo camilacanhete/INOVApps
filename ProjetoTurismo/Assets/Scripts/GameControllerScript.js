@@ -34,7 +34,7 @@ function ChooseRandomNumber() : int
 function ChangeCurrentPlayer()
 {
 	
-	if(currentPlayerNumber == 4)
+	if(currentPlayerNumber == players.length)
 	{
 		currentPlayerNumber = 1;
 	}
