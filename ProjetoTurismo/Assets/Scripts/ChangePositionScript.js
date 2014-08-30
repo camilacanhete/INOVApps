@@ -8,12 +8,12 @@ public var playerIsMoving : boolean = false;				//csantos: check if player is mo
 public var gravity : float = 30.0;
 public var jumpSpeed : float = 6.0;
  
-private var nav : NavMeshAgent;								//csantos: reference to the nav mesh agent
-private var controller : CharacterController;				//csantos: reference to the character controller			
+private var nav : NavMeshAgent;								//csantos: reference to the nav mesh agent			
 private var nextPoint : GameObject = null;					//csantos: reference to the next tile of the player's movement
 private var currentTile : int = 0;							//csantos: current tile number
 private var movementDirection : Vector3 = Vector3.zero;		//csantos: player's next movement direction
 private var col : CapsuleCollider;							//csantos: reference to player's capsule collider
+private var finishMoving : boolean = false;					//csantos: check if user reached the last tile
 
 private var gameController : GameObject;					//csantos: reference to game controller object
 
@@ -21,27 +21,45 @@ function Start ()
 {
 	nav = GetComponent(NavMeshAgent); //csantos : init navmesh reference
 	col = GetComponent(CapsuleCollider); //csantos : init capsule collider reference
-	controller = GetComponent(CharacterController); //csantos: init character controller
 	gameController = GameObject.Find(Vars.GAME_CONTROLLER); //csantos: init game controller reference
+	
+	//csantos: to increate performance in mobile devices is advised to user InvokeRepeating() 
+	//instead of default Update() function in all functions that don't use Time.deltatime as a parameter
+	InvokeRepeating("MovePlayer",0.02, 0.02);    
 	
 }
 
-function Update () 
+function MovePlayer () 
 {
 
  	nav.speed = speed; //csantos: adjust speed manually
  	
-
- 	//csantos: check if current tile is the last tile available in the board. if it is the last tile, we have a winner!
- 	if(currentTile >= gameController.GetComponent(GameControllerScript).numberOfTiles.length)
- 	{
- 		Debug.Log("Player " + playerNumber + " won!");
- 		return;
- 	}
- 	
  	//csantos: if still is player's turn and he/she is not moving yet
- 	if(currentMoves > 0 && nav.pathStatus == NavMeshPathStatus.PathComplete && nav.remainingDistance == 0)
+ 	if(currentMoves <= 0 && nav.pathStatus == NavMeshPathStatus.PathComplete && nav.remainingDistance == 0)
  	{
+ 		if(finishMoving)
+ 		{
+ 			//csantos: check if current tile is the last tile available in the board. if it is the last tile, we have a winner!
+ 			if(currentTile >= gameController.GetComponent(GameControllerScript).numberOfTiles.length)
+ 			{
+ 				Debug.Log("Player " + playerNumber + " won!");
+		 		return;
+ 			}
+ 		
+ 			//csantos: and we tell to game controller it is time to continue the game
+			gameController.GetComponent(GameControllerScript).setTimerAndAction(2.0, GameControllerScript.CHANGE_CURRENT_PLAYER);
+			finishMoving = false;
+ 		}
+ 	}
+ 	else if(currentMoves > 0 && nav.pathStatus == NavMeshPathStatus.PathComplete && nav.remainingDistance == 0)
+ 	{
+ 		//csantos: check if current tile is the last tile available in the board. if it is the last tile, we have a winner!
+ 		if(currentTile >= gameController.GetComponent(GameControllerScript).numberOfTiles.length)
+ 		{
+ 			Debug.Log("Player " + playerNumber + " won!");
+		 	return;
+ 		}
+ 			
  		//csantos: set the next tile as the destination
  		nextPoint = GameObject.Find(Vars.TILE_NAME + (currentTile + 1));
 		
@@ -67,9 +85,8 @@ function Update ()
 					movementDirection = Vector3(nextPoint.transform.position.x - offTileDistance, nextPoint.transform.position.y, nextPoint.transform.position.z - offTileDistance);
 				break;
 			}
-
-			//csantos: and we tell to game controller it is time to continue the game
-			gameController.GetComponent(GameControllerScript).setTimerAndAction(5.0, GameControllerScript.ACTION_CHANGE_CURRENT_PLAYER);
+			
+			finishMoving = true;
 		}
 		
 		//csantos: move the player to the next point
@@ -81,7 +98,7 @@ function Update ()
  		playerIsMoving = true;
  	}
  	else
- 	{
+ 	{	
  		playerIsMoving = false;
  		
  	}
