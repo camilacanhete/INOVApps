@@ -1,0 +1,200 @@
+fileFormatVersion: 2
+guid: 26de64ed4ac48a44ea1a09e56e3303cd
+ModelImporter:
+  serializedVersion: 16
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: pivotBoy
+    100004: pivotSkeleton
+    100006: pivotSkeleton|back
+    100008: pivotSkeleton|feet
+    100010: pivotSkeleton|head
+    100012: pivotSkeleton|pelvis
+    400000: //RootNode
+    400002: pivotBoy
+    400004: pivotSkeleton
+    400006: pivotSkeleton|back
+    400008: pivotSkeleton|feet
+    400010: pivotSkeleton|head
+    400012: pivotSkeleton|pelvis
+    4300000: pivotBoy
+    7400000: pivotSkeleton|moving
+    7400002: pivotSkeleton|startMove
+    7400004: idle
+    7400006: pivotSkeleton|idle
+    9500000: //RootNode
+    13700000: pivotBoy
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: pivotSkeleton|moving
+      takeName: pivotSkeleton|moving
+      firstFrame: 0
+      lastFrame: 39
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: pivotBoy
+        weight: 1
+      - path: pivotSkeleton
+        weight: 1
+      - path: pivotSkeleton/pivotSkeleton|feet
+        weight: 1
+      - path: pivotSkeleton/pivotSkeleton|feet/pivotSkeleton|pelvis
+        weight: 1
+      - path: pivotSkeleton/pivotSkeleton|feet/pivotSkeleton|pelvis/pivotSkeleton|back
+        weight: 1
+      - path: pivotSkeleton/pivotSkeleton|feet/pivotSkeleton|pelvis/pivotSkeleton|back/pivotSkeleton|head
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: pivotSkeleton|startMove
+      takeName: pivotSkeleton|startMove
+      firstFrame: 0
+      lastFrame: 40
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: pivotBoy
+        weight: 1
+      - path: pivotSkeleton
+        weight: 1
+      - path: pivotSkeleton/pivotSkeleton|feet
+        weight: 1
+      - path: pivotSkeleton/pivotSkeleton|feet/pivotSkeleton|pelvis
+        weight: 1
+      - path: pivotSkeleton/pivotSkeleton|feet/pivotSkeleton|pelvis/pivotSkeleton|back
+        weight: 1
+      - path: pivotSkeleton/pivotSkeleton|feet/pivotSkeleton|pelvis/pivotSkeleton|back/pivotSkeleton|head
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: pivotSkeleton|idle
+      takeName: pivotSkeleton|startMove
+      firstFrame: 0
+      lastFrame: 1
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: pivotBoy
+        weight: 1
+      - path: pivotSkeleton
+        weight: 1
+      - path: pivotSkeleton/pivotSkeleton|feet
+        weight: 1
+      - path: pivotSkeleton/pivotSkeleton|feet/pivotSkeleton|pelvis
+        weight: 1
+      - path: pivotSkeleton/pivotSkeleton|feet/pivotSkeleton|pelvis/pivotSkeleton|back
+        weight: 1
+      - path: pivotSkeleton/pivotSkeleton|feet/pivotSkeleton|pelvis/pivotSkeleton|back/pivotSkeleton|head
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  additionalBone: 0
+  userData: 
