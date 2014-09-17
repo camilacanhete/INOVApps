@@ -29,9 +29,8 @@ function Start ()
 	
 }
 
-function MovePlayer () 
-{
-
+function MovePlayer () {
+	/*
  	nav.speed = speed; //csantos: adjust speed manually
  	
  	//csantos: if still is player's turn and he/she is not moving yet
@@ -102,5 +101,5 @@ function MovePlayer ()
  		playerIsMoving = false;
  		
  	}
-	
+	*/
 }
