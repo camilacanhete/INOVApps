@@ -6,9 +6,10 @@ public static var SHOW_DICE : String = "showDice";
 public static var ROTATE_DICE : String = "rotateDice";
 public static var MOVE_PLAYER : String = "movePlayer";
 
+public var numberOfPlayers : int = 2;
 public var trackLength = 0;
 public var randomNum : int = 0;						//csantos: random number selected to move player
-public var currentPlayer : int = 0;			//csantos: player's number in the current turn
+private var currentPlayer : int;			//csantos: player's number in the current turn
 public var tileBeacons : Transform[];			//csantos: reference to all tiles in the current game
 public var players : GameObject[];					//csantos: reference to all players in the current game
 public var dice : GameObject;
@@ -23,11 +24,12 @@ function Start ()
 	//players = GameObject.FindGameObjectsWithTag(Vars.PLAYER); //csantos: search all players
 	LoadPlayers();
 	LoadTiles();
+	currentPlayer = numberOfPlayers-1;
 	dice = GameObject.FindGameObjectWithTag(Vars.DICE);
 	players_hud = GameObject.FindGameObjectsWithTag(Vars.PLAYER_HUD);
 	
 	//temp
-	setTimerAndAction(0.0, CHANGE_CURRENT_PLAYER);
+	setTimerAndAction(0.0f, CHANGE_CURRENT_PLAYER);
 }
 
 function LoadPlayers () {
@@ -36,6 +38,8 @@ function LoadPlayers () {
 	tmpPlayers = GameObject.FindGameObjectsWithTag(Vars.PLAYER);
 	for (var p in tmpPlayers) {
 		if (p.name.StartsWith("Player")) {
+			p.GetComponent(PivotControllerScript).ring.SetActive(false);
+			p.GetComponent(PivotControllerScript).sparker.particleSystem.gravityModifier = 1.0f;
 			players[int.Parse(p.name.Replace("Player", ""))] = p;
 		}
 	}
@@ -48,6 +52,7 @@ function LoadTiles () {
 	for (var b in tmpBeacons) {
 		if (b.name.StartsWith("h")) {
 			tileBeacons[int.Parse(b.name.Replace("h", ""))] = b.transform;
+			b.renderer.enabled = false;
 		}
 	}	
 }
@@ -55,15 +60,18 @@ function LoadTiles () {
 //csantos: select a random number to move player. this number will be shown with a dice.
 function ChooseRandomNumber()
 {
-	randomNum = Random.Range (1, 6);
+	randomNum = Random.Range (1, 4);
 	//randomNum = 1;
 }
 
 //csantos: change player's turn
 function ChangeCurrentPlayer() {
-	currentPlayer = Mathf.PingPong (currentPlayer, players.length-1) + 1;
+	players[currentPlayer].GetComponent(PivotControllerScript).ring.SetActive(false);
+	players[currentPlayer].GetComponent(PivotControllerScript).sparker.particleSystem.gravityModifier = 1.0f;
+	currentPlayer = Mathf.PingPong (currentPlayer+1, numberOfPlayers-1);
+	players[currentPlayer].GetComponent(PivotControllerScript).ring.SetActive(true);
+	players[currentPlayer].GetComponent(PivotControllerScript).sparker.particleSystem.gravityModifier = 0.1f;
 	updateHUD();
-	Debug.Log("here");
 }
 
 function initHUD()
@@ -113,8 +121,7 @@ function updateHUD()
 //csantos: move current player on the board
 function moveCurrentPlayer()
 {
-	GameObject.Find("Player1").GetComponent(PivotControllerScript).Move (55);
-	//players[currentPlayer].GetComponent(PivotControllerScript).Move (randomNum);
+	players[currentPlayer].GetComponent(PivotControllerScript).Move (randomNum);
 }
 
 //csantos: change if dice can move or not

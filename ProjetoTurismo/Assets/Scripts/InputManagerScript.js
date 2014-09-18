@@ -25,8 +25,7 @@ function CheckKeyPressed ()
     
     if ((Input.GetButtonUp("Jump") ||  Input.touches.length != 0) && gameController != null)
 	{
-		if(gameController.GetComponent(GameControllerScript).checkIfDiceCanMove())
-		{
+		if(gameController.GetComponent(GameControllerScript).checkIfDiceCanMove()) {
 			gameController.GetComponent(GameControllerScript).setTimerAndAction(0.0, GameControllerScript.ROTATE_DICE);
 			
 		}
