@@ -15,7 +15,7 @@ function Start ()
 
 function LateUpdate () 
 {
-	currentPlayer = gameController.GetComponent(GameControllerScript).currentPlayer;
+	currentPlayer = gameController.GetComponent(GameControllerScript).players[0];
 	
 	if (currentPlayer == null)
 		return;

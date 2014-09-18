@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 658fc926991e94dda8538248cb8052ec
+guid: 5cfc481044c7bf54d9ea63ddd1b9a959
 ModelImporter:
   serializedVersion: 16
   fileIDToRecycleName:
@@ -7,8 +7,7 @@ ModelImporter:
     400000: //RootNode
     2300000: //RootNode
     3300000: //RootNode
-    4300000: TabuleiroSul
-    7400000: Default Take
+    4300000: Dado
     9500000: //RootNode
   materials:
     importMaterials: 1
@@ -18,6 +17,7 @@ ModelImporter:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
     optimizeGameObjects: 0
+    motionNodeName: 
     animationCompression: 1
     animationRotationError: .5
     animationPositionError: .5

@@ -6,10 +6,11 @@ public static var SHOW_DICE : String = "showDice";
 public static var ROTATE_DICE : String = "rotateDice";
 public static var MOVE_PLAYER : String = "movePlayer";
 
+public var numberOfPlayers : int = 2;
+public var trackLength = 0;
 public var randomNum : int = 0;						//csantos: random number selected to move player
-public var currentPlayerNumber : int = 0;			//csantos: player's number in the current turn
-public var currentPlayer : GameObject;				//csantos: reference to current player's
-public var numberOfTiles : GameObject[];			//csantos: reference to all tiles in the current game
+private var currentPlayer : int;			//csantos: player's number in the current turn
+public var tileBeacons : Transform[];			//csantos: reference to all tiles in the current game
 public var players : GameObject[];					//csantos: reference to all players in the current game
 public var dice : GameObject;
 public var players_hud : GameObject[];
@@ -19,38 +20,58 @@ private var nextAction : String = "";				//csantos: reference to the next action
 
 function Start () 
 {
-	numberOfTiles = GameObject.FindGameObjectsWithTag(Vars.TILE); //csantos: search all tiles
-	players = GameObject.FindGameObjectsWithTag(Vars.PLAYER); //csantos: search all players
+	//numberOfTiles = GameObject.FindGameObjectsWithTag(Vars.TILE); //csantos: search all tiles
+	//players = GameObject.FindGameObjectsWithTag(Vars.PLAYER); //csantos: search all players
+	LoadPlayers();
+	LoadTiles();
+	currentPlayer = numberOfPlayers-1;
 	dice = GameObject.FindGameObjectWithTag(Vars.DICE);
 	players_hud = GameObject.FindGameObjectsWithTag(Vars.PLAYER_HUD);
 	
 	//temp
-	setTimerAndAction(0.0, CHANGE_CURRENT_PLAYER);
+	setTimerAndAction(0.0f, CHANGE_CURRENT_PLAYER);
+}
+
+function LoadPlayers () {
+	players = new GameObject[4];
+	var tmpPlayers : GameObject[];
+	tmpPlayers = GameObject.FindGameObjectsWithTag(Vars.PLAYER);
+	for (var p in tmpPlayers) {
+		if (p.name.StartsWith("Player")) {
+			p.GetComponent(PivotControllerScript).ring.SetActive(false);
+			p.GetComponent(PivotControllerScript).sparker.particleSystem.gravityModifier = 1.0f;
+			players[int.Parse(p.name.Replace("Player", ""))] = p;
+		}
+	}
+}
+
+function LoadTiles () {
+	tileBeacons = new Transform[trackLength];
+	var tmpBeacons : GameObject[];
+	tmpBeacons = GameObject.FindGameObjectsWithTag(Vars.TILE);
+	for (var b in tmpBeacons) {
+		if (b.name.StartsWith("h")) {
+			tileBeacons[int.Parse(b.name.Replace("h", ""))] = b.transform;
+			b.renderer.enabled = false;
+		}
+	}	
 }
 
 //csantos: select a random number to move player. this number will be shown with a dice.
 function ChooseRandomNumber()
 {
-	randomNum = Random.Range (1, 6);
+	randomNum = Random.Range (1, 4);
 	//randomNum = 1;
 }
 
 //csantos: change player's turn
-function ChangeCurrentPlayer()
-{
-	if(currentPlayerNumber == players.length)
-	{
-		currentPlayerNumber = 1;
-	}
-	else
-	{
-		currentPlayerNumber = currentPlayerNumber + 1;	
-	}
-	
-	currentPlayer = GameObject.Find(Vars.PLAYER + currentPlayerNumber);
+function ChangeCurrentPlayer() {
+	players[currentPlayer].GetComponent(PivotControllerScript).ring.SetActive(false);
+	players[currentPlayer].GetComponent(PivotControllerScript).sparker.particleSystem.gravityModifier = 1.0f;
+	currentPlayer = Mathf.PingPong (currentPlayer+1, numberOfPlayers-1);
+	players[currentPlayer].GetComponent(PivotControllerScript).ring.SetActive(true);
+	players[currentPlayer].GetComponent(PivotControllerScript).sparker.particleSystem.gravityModifier = 0.1f;
 	updateHUD();
-	Debug.Log("here");
-	
 }
 
 function initHUD()
@@ -62,7 +83,7 @@ function initHUD()
 		case 1:
 			for(var hud in players_hud)
 			{
-				if(!hud.name.Contains(currentPlayerNumber.ToString()))
+				if(!hud.name.Contains(currentPlayer.ToString()))
 				{
 					hud.active = false;
 				}
@@ -73,7 +94,7 @@ function initHUD()
 		case 2:
 			for(var hud in players_hud)
 			{
-				if(!hud.name.Contains(currentPlayerNumber.ToString()))
+				if(!hud.name.Contains(currentPlayer.ToString()))
 				{
 					hud.active = false;
 				}
@@ -86,7 +107,7 @@ function updateHUD()
 {
 	for(var hud in players_hud)
 	{
-		if(hud.name.Contains(currentPlayerNumber.ToString()))
+		if(hud.name.Contains(currentPlayer.ToString()))
 		{
 			TweenAlpha.Begin(hud, 0.6, 1.0);
 		}
@@ -100,13 +121,7 @@ function updateHUD()
 //csantos: move current player on the board
 function moveCurrentPlayer()
 {
-	for(var player in players)
-	{
-		if(player.GetComponent(ChangePositionScript).playerNumber == currentPlayerNumber)
-		{
-			player.GetComponent(ChangePositionScript).currentMoves = randomNum;
-		}
-	}
+	players[currentPlayer].GetComponent(PivotControllerScript).Move (randomNum);
 }
 
 //csantos: change if dice can move or not
@@ -182,26 +197,17 @@ function CheckNextAction()
 //csantos: clean up the house on user quit
 function OnApplicationQuit()
 {	
-	if(currentPlayer)
-	{
-		UnityEngine.Object.Destroy(currentPlayer);
-	}
-	
-	if(dice)
-	{
+	if(dice) {
 		UnityEngine.Object.Destroy(dice);
 	}
 	
-	for(var tile in numberOfTiles)
-	{
-		if(tile)
-		{
+	for(var tile in tileBeacons) {
+		if(tile) {
 			UnityEngine.Object.Destroy(tile);
 		}
 	}
 	
-	for(var player in players)
-	{
+	for(var player in players) {
 		if(player)
 		{
 			UnityEngine.Object.Destroy(player);
